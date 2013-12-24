@@ -1,4 +1,6 @@
 Lilly::Application.routes.draw do
+  resources :pups
+
   devise_for :users
   root "pages#home"
   get "about" => "pages#about"
