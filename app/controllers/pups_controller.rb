@@ -4,7 +4,7 @@ class PupsController < ApplicationController
   # GET /pups
   # GET /pups.json
   def index
-    @pups = Pup.all
+    @pups = Pup.to_a
   end
 
   # GET /pups/1
@@ -14,7 +14,7 @@ class PupsController < ApplicationController
 
   # GET /pups/new
   def new
-    @pup = Pup.new
+    @pup = current_user.pups.build
   end
 
   # GET /pups/1/edit
@@ -24,7 +24,7 @@ class PupsController < ApplicationController
   # POST /pups
   # POST /pups.json
   def create
-    @pup = Pup.new(pup_params)
+    @pup = Pup.current_user.pups.build(pup_params)
 
       if @pup.save
          redirect_to @pup, notice: 'Pup was successfully created.' 
@@ -59,6 +59,6 @@ class PupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pup_params
-      params.require(:pup).permit(:description, :date)
+      params.require(:pup).permit(:description, :date, :image)
     end
 end
