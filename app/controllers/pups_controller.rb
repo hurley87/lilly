@@ -57,6 +57,11 @@ class PupsController < ApplicationController
       @pup = Pup.find(params[:id])
     end
 
+    def correct_user
+      @pup = current_user.pups.find_by(id: params[:id])
+      redirect_to pups_path, notice: "Not authorized to edit this pin" if @pup.nil?
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def pup_params
       params.require(:pup).permit(:description, :date, :image)
